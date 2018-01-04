@@ -1,11 +1,11 @@
-package net.bdew.wurm.hwportals;
+package main.java.net.bdew.wurm.hwportals;
 
 import com.wurmonline.server.behaviours.Actions;
 import javassist.ClassPool;
 import javassist.CtClass;
-import net.bdew.wurm.hwportals.actions.PreventPortalActionPerformer;
-import net.bdew.wurm.hwportals.actions.TeleportAction;
-import net.bdew.wurm.hwportals.actions.TogglePortalAction;
+import main.java.net.bdew.wurm.hwportals.actions.PreventPortalActionPerformer;
+import main.java.net.bdew.wurm.hwportals.actions.TeleportAction;
+import main.java.net.bdew.wurm.hwportals.actions.TogglePortalAction;
 import org.gotti.wurmunlimited.modloader.classhooks.HookManager;
 import org.gotti.wurmunlimited.modloader.interfaces.*;
 import org.gotti.wurmunlimited.modsupport.actions.ModActions;
@@ -43,11 +43,11 @@ public class HwPortals implements WurmServerMod, Configurable, PreInitable, Init
             ClassPool classPool = HookManager.getInstance().getClassPool();
 
             classPool.getCtClass("com.wurmonline.server.zones.Zone").getMethod("addItem", "(Lcom/wurmonline/server/items/Item;ZZZ)V")
-                    .insertAfter("if ($4) net.bdew.wurm.hwportals.Hooks.addItemLoading($1);");
+                    .insertAfter("if ($4) main.java.net.bdew.wurm.hwportals.Hooks.addItemLoading($1);");
 
             CtClass ctVillage = classPool.getCtClass("com.wurmonline.server.villages.Village");
-            ctVillage.getMethod("disband", "(Ljava/lang/String;)V").insertBefore("net.bdew.wurm.hwportals.Hooks.disband(this);");
-            ctVillage.getMethod("setNewBounds", "(IIII)V").insertAfter("net.bdew.wurm.hwportals.Hooks.resize(this);");
+            ctVillage.getMethod("disband", "(Ljava/lang/String;)V").insertBefore("main.java.net.bdew.wurm.hwportals.Hooks.disband(this);");
+            ctVillage.getMethod("setNewBounds", "(IIII)V").insertAfter("main.java.net.bdew.wurm.hwportals.Hooks.resize(this);");
         } catch (Throwable e) {
             throw new RuntimeException(e);
         }

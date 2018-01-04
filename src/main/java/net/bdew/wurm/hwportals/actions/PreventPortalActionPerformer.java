@@ -1,9 +1,9 @@
-package net.bdew.wurm.hwportals.actions;
+package main.java.net.bdew.wurm.hwportals.actions;
 
 import com.wurmonline.server.behaviours.Action;
 import com.wurmonline.server.creatures.Creature;
 import com.wurmonline.server.items.Item;
-import net.bdew.wurm.hwportals.PortalItems;
+import main.java.net.bdew.wurm.hwportals.PortalItems;
 import org.gotti.wurmunlimited.modsupport.actions.ActionPerformer;
 import org.gotti.wurmunlimited.modsupport.actions.ActionPropagation;
 
@@ -33,7 +33,7 @@ public class PreventPortalActionPerformer implements ActionPerformer {
     @Override
     public boolean action(Action action, Creature performer, Item target, short num, float counter) {
         if (shouldPrevent(performer, target)) {
-            performer.getCommunicator().sendAlertServerMessage(String.format("Shut the portal down before %s it.", action.getActionEntry().getVerbString()));
+            performer.getCommunicator().sendAlertServerMessage(String.format("Shut the caravan station down before %s it.", action.getActionEntry().getVerbString()));
             return propagate(action, ActionPropagation.NO_SERVER_PROPAGATION, ActionPropagation.NO_ACTION_PERFORMER_PROPAGATION, ActionPropagation.FINISH_ACTION);
         } else {
             return propagate(action, ActionPropagation.ACTION_PERFORMER_PROPAGATION, ActionPropagation.SERVER_PROPAGATION);

@@ -1,13 +1,13 @@
-package net.bdew.wurm.hwportals.actions;
+package main.java.net.bdew.wurm.hwportals.actions;
 
 import com.wurmonline.server.behaviours.Action;
 import com.wurmonline.server.behaviours.ActionEntry;
 import com.wurmonline.server.creatures.Creature;
 import com.wurmonline.server.items.Item;
 import com.wurmonline.server.villages.Village;
-import net.bdew.wurm.hwportals.PortalItems;
-import net.bdew.wurm.hwportals.PortalTracker;
-import net.bdew.wurm.hwportals.questions.TeleportQuestion;
+import main.java.net.bdew.wurm.hwportals.PortalItems;
+import main.java.net.bdew.wurm.hwportals.PortalTracker;
+import main.java.net.bdew.wurm.hwportals.questions.TeleportQuestion;
 import org.gotti.wurmunlimited.modloader.ReflectionUtil;
 import org.gotti.wurmunlimited.modsupport.actions.*;
 
@@ -18,7 +18,7 @@ public class TeleportAction implements ModAction, BehaviourProvider, ActionPerfo
     private final ActionEntry actionEntry;
 
     public TeleportAction() {
-        actionEntry = ActionEntry.createEntry((short) ModActions.getNextActionId(), "Teleport", "thinking with portals", new int[]{
+        actionEntry = ActionEntry.createEntry((short) ModActions.getNextActionId(), "Ride Caravan", "ride to a nearby settlement", new int[]{
                 48 /* ACTION_TYPE_ENEMY_ALWAYS */,
                 37 /* ACTION_TYPE_NEVER_USE_ACTIVE_ITEM */
         });
@@ -67,19 +67,19 @@ public class TeleportAction implements ModAction, BehaviourProvider, ActionPerfo
         }
 
         if (performer.getVisionArea() == null || !performer.getVisionArea().isInitialized()) {
-            performer.getCommunicator().sendAlertServerMessage("You have not fully manifested in the world yet, please wait a bit.");
+            performer.getCommunicator().sendAlertServerMessage("You have just rode a caravan, please wait a bit.");
             return propagate(action, ActionPropagation.NO_SERVER_PROPAGATION, ActionPropagation.NO_ACTION_PERFORMER_PROPAGATION, ActionPropagation.FINISH_ACTION);
         }
 
         Village village = PortalTracker.getVillageFor(target);
         if (village == null) {
-            performer.getCommunicator().sendAlertServerMessage("The portal needs to be placed in a village to use.");
+            performer.getCommunicator().sendAlertServerMessage("The caravan station needs to be placed in a village to use.");
             return propagate(action, ActionPropagation.NO_SERVER_PROPAGATION, ActionPropagation.NO_ACTION_PERFORMER_PROPAGATION, ActionPropagation.FINISH_ACTION);
         }
 
         List<Village> validTargets = PortalTracker.getTeleportDestinations(performer, village);
         if (validTargets.isEmpty()) {
-            performer.getCommunicator().sendAlertServerMessage("There are no valid destinations for the portal.");
+            performer.getCommunicator().sendAlertServerMessage("There are no valid destinations for the caravan station.");
             return propagate(action, ActionPropagation.NO_SERVER_PROPAGATION, ActionPropagation.NO_ACTION_PERFORMER_PROPAGATION, ActionPropagation.FINISH_ACTION);
         }
 
